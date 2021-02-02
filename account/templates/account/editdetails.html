@@ -1,0 +1,55 @@
+{% extends 'users/base.html' %}
+
+{% block body %}
+
+	<div class="container my-4">
+		<h3>Edit Details</h3>
+		<form method='POST' action='editdetails' enctype="multipart/form-data">
+		  {% csrf_token %}
+
+		  <div class="form-group my-4">
+		    <label for="image">Change Profile Picture</label>
+		    <span style="display:inline-block; width: 50px;"></span>
+        	<input type="file" name="image" id="image">
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="first_name">First Name</label>
+		    <input type="text" class="form-control" id="first_name" placeholder="" name="first_name" value="{{ userobj.first_name }}" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="last_name">Last Name</label>
+		    <input type="text" class="form-control" id="last_name" placeholder="" name="last_name" value="{{ userobj.last_name }}" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="email">Email Address (This will be visible on your profile)</label>
+		    <input type="email" class="form-control" id="email" placeholder="" name="email" value="{{ details.email }}" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		  	<label for="contact">Contact Details</label>
+		    <input type="text" class="form-control" id="contact" placeholder="" name="contact" {% if details.contact %} value="{{ details.contact }}" {% endif %}>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="Skills">Skills (Please enter comma separated values)</label>
+		    <input type="text" class="form-control" id="skills" placeholder="" name="skills" value="{{ skills }}" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="github">Github Profile Link</label>
+		    <input type="url" class="form-control" id="github" placeholder="" name="github" {% if details.githubprofile %} value="{{ details.githubprofile }}" {% endif %}>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="bio">Tell us about yourself</label>
+		    <input type="text" class="form-control" id="bio" placeholder="" name="bio" {% if details.bio %} value="{{ details.bio }}" {% endif %}>
+		  </div>
+		  <button type="submit" class="btn btn-primary my-2">Save Changes</button>
+		</form>
+	</div>
+
+
+{% endblock %}

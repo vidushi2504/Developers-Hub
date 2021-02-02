@@ -1,0 +1,36 @@
+{% extends 'users/base.html' %}
+
+{% block body %}
+	<div class="container my-4">
+		<h3>Enter your details to proceed</h3>
+		<form method='POST' action='creation'>
+		  {% csrf_token %}
+		  <div class="form-group my-4">
+		    <label for="email">Email Address (This will be visible on your profile)</label>
+		    <input type="email" class="form-control" id="email" placeholder="" name="email" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		  	<label for="contact">Contact Details</label>
+		    <input type="text" class="form-control" id="contact" placeholder="" name="contact">
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="Skills">Skills (Please enter comma separated values)</label>
+		    <input type="text" class="form-control" id="skills" placeholder="" name="skills" required>
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="github">Github Profile Link</label>
+		    <input type="url" class="form-control" id="github" placeholder="" name="github">
+		  </div>
+
+		  <div class="form-group my-4">
+		    <label for="bio">Tell us about yourself</label>
+		    <input type="text" class="form-control" id="bio" placeholder="" name="bio">
+		  </div>
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+
+{% endblock %}
