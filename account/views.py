@@ -25,7 +25,7 @@ def user_account(request, userid):
 
 def user_creation(request):				# change to class based view
 
-	if request.method=="POST":
+	if request.method == "POST":
 		mail=request.POST.get('email', '')
 		contact=request.POST.get('contact', '')
 		skills=request.POST.get('skills', '')
@@ -71,12 +71,10 @@ def edit_details(request):
 			skill_obj.save()
 		return redirect('account', request.user.id)
 
-	context={
+	context = {
 		'userobj':user,
 		'details':details,
 		'skills':skills
 	}
 
 	return render(request, "account/editdetails.html", context)
-
-
