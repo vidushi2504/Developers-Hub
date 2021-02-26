@@ -18,35 +18,29 @@
           </div>
         </article>
         {% if object.author == user %}
-                  <div>
-                    <a class="btn btn-outline-secondary bt-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-                    <a class="btn btn-outline-danger bt-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
-                  </div>
-                {% endif %}
+          <div>
+            <a class="btn btn-outline-secondary bt-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-outline-danger bt-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
         <br>
         <hr>    
-        <form action="{% url 'like_post' post.id %}" method="post">
-          {% csrf_token %}
-          <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
-        </form>
-        <br><br>
-        <hr>
-            <h2>Comments...</h2>
-            <br>
-            {% if not post.comments.all %}
-                No Comments yet..<a href="#">Add One</a>
-            {% else %}
-                {% for comment in post.comments.all %}
-                    <strong>
-                        {{ comment.name }} - {{ comment.date_added }}
-                    </strong>
-                    <br>
-                    {{ comment.body }}
-                    <br><br>
-                {% endfor %}
-                <hr>
-            {% endif %}
-        <br><br>
+        <h2>Comments...</h2>
+        <br>
+        {% if not post.comments.all %}
+            No Comments yet..<a href="#">Add One</a>
+        {% else %}
+            {% for comment in post.comments.all %}
+                <strong>
+                    {{ comment.name }} - {{ comment.date_added }}
+                </strong>
+                <br>
+                {{ comment.body }}
+                <br><br>
+            {% endfor %}
+            <hr>
+        {% endif %}
+    <br><br>
 	    
 	{% endblock %}
 

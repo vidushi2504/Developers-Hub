@@ -13,8 +13,9 @@ from .models import Post
 # Create your views here.
 
 def home(request):
+	posts=Post.objects.all()
 	context = {
-		'posts': Post.objects.all()
+		'posts': posts,
 	}
 	return render(request, 'home/home.html', context)
 
@@ -65,9 +66,5 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 		return self.request.user == post.author
 
 
-def PostLikeView(request, pk):
-	post = get_object_or_404(Post, id=request.POST.get('post_id'))
-	post.likes.add(request.user)
-	return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
 

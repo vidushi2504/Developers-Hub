@@ -27,7 +27,6 @@ class Experience(models.Model):
 	description=models.TextField()
 	startdate=models.CharField(max_length=200)
 	enddate=models.CharField(max_length=200)
-	#post
 	
 	def __str__(self):
 		return str(self.user)+" "+str(self.title)

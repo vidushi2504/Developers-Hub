@@ -17,11 +17,11 @@
 		 </div> 
 		  <div class="media-body my-4 info col">
 		  	<h3 class="mt-0">{{ details.user.first_name }} {{ details.user.last_name }}</h3>
-		  	{% if request.user.is_authenticated %} 
+		  	{% if request.user.id == details.user.id %} 
 		  		<a class="btn btn-outline-primary" href="{% url 'editdetails' %}" style="float: right;">Edit Profile</a><br>
-		  	{% else %}
-		  		<a class="btn btn-outline-primary" href="#" style="float: right;">Follow</a><br>
-		  	{% endif %} 
+			{% endif %} 
+			<br>
+	    	<a class="btn btn-outline-primary" href="{% url 'viewposts' details.user.id %}" style="float: right;">Posts</a><br>
 		    <h6 class="mt-0" style="font-weight: bold; float: left;">Email ID:&nbsp</h6></span><h6>{{ details.email }}</h6>
 		    {% if details.contact %}
 		    	<h6 class="mt-0" style="font-weight: bold; float: left;">Contact Number:&nbsp</h6><h6>{{ details.contact }}</h6>
@@ -43,11 +43,6 @@
     			{% endfor %} 
 			 </div>
 			 <div class="col">
-			 	{% if request.user.is_authenticated %} 
-			    	<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="Modal">
-					  + Add Experience
-					</button>
-			    {% endif %}
 			    <div class="container my-4">
 				    {% for i in experiences %}
 				    	<div class="card">
@@ -64,25 +59,6 @@
 			 </div>
 		</div>
 	</div>
-</div>	
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 {% endblock %}

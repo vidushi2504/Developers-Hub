@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Account, Skill, Experience
+from home.models import Post
 from django.contrib.auth.models import User
 from django.views.generic import View
 
@@ -53,7 +54,7 @@ def edit_details(request):
 		skills+=", "
 	skills=skills[:len(skills)-2]
 	if request.method=="POST":
-		image=request.POST.get('image', )
+		image=request.FILES['image'] if 'image' in request.FILES else False
 		first_name=request.POST.get('first_name', '')
 		last_name=request.POST.get('last_name', '')
 		mail=request.POST.get('email', '')
@@ -62,13 +63,27 @@ def edit_details(request):
 		githubprofile=request.POST.get('github', '')
 		bio=request.POST.get('bio', '')
 		user=request.user
-		user_obj=User(first_name=first_name, last_name=last_name)
-		obj=Account(user=user, userImage=image, email=mail, contact=contact, githubprofile=githubprofile, bio=bio)
-		obj.save()
+		user.first_name=first_name
+		user.last_name=last_name
+		user.save()
+
+		details.user=user
+		if image is not False:
+			details.userImage=image
+		details.email=mail
+		details.contact=contact
+		details.githubprofile=githubprofile
+		details.bio=bio
+		details.save()
 		skills=skills.split(',')
+		skill_obj=Skill.objects.filter(user=user)
 		for i in skills:
-			skill_obj=Skill(user=user, skill_value=i)
-			skill_obj.save()
+			if i not in skill_obj:
+				obj=Skill(user=user, skill_value=i)
+				obj.save()
+		for i in skill_obj:
+			if i not in skills:
+				i.delete()
 		return redirect('account', request.user.id)
 
 	context = {
@@ -78,3 +93,11 @@ def edit_details(request):
 	}
 
 	return render(request, "account/editdetails.html", context)
+
+def view_posts(request, userid):
+	user=User.objects.get(id=userid)
+	posts=Post.objects.filter(author=user)
+	context={
+		'posts':posts
+	}
+	return render(request, "account/viewpost.html", context)
