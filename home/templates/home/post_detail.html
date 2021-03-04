@@ -10,11 +10,12 @@
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ object.author }}</a>
-              <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-                
+              <small class="text-muted">{{ object.category }}</small>
+              <small class="text-muted" style="float: right;">{{ object.date_posted|date:"F d, Y" }}</small>                
             </div>
+
             <h2 class="article-title">{{ object.title }}</h2>
-            <p class="article-content">{{ object.content }}</p>
+            <p class="article-content">{{ object.content|safe }}</p>
           </div>
         </article>
         {% if object.author == user %}
@@ -25,11 +26,15 @@
         {% endif %}
         <br>
         <hr>    
-        <h2>Comments...</h2>
+        <h2>Comment Section</h2>
         <br>
         {% if not post.comments.all %}
-            No Comments yet..<a href="#">Add One</a>
+            No Comments yet
+            <br>
+            <a href="{% url 'add-comment' post.pk %}">Be the first Ont to Comment!</a>
         {% else %}
+            <a href="{% url 'add-comment' post.pk %}">Add a comment</a>
+            <br>
             {% for comment in post.comments.all %}
                 <strong>
                     {{ comment.name }} - {{ comment.date_added }}

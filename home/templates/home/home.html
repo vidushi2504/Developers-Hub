@@ -3,22 +3,23 @@
 {% block body %}
 	
 	<main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% for post in posts %}
-	        <article class="media content-section">
-	          <img class="rounded-circle article-img" src="{{ post.img }}">
-	          <div class="media-body">
-	            <div class="article-metadata">
-	              <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author }}</a>
-	              <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
-	            </div>
-	            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-	            <p class="article-content">{{ post.content }}</p>
-	          </div>
-	        </article>
-	    {% endfor %}
-        </div>
+    <div class="row">
+      <div class="col-md-8">
+        {% for post in posts %}
+        <article class="media content-section" class="item">
+          <img class="rounded-circle article-img" src="{{ post.img }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author }}</a>
+              <a class="mr-2" href="{% url 'category' post.category %}">{{ post.category }}</a>
+              <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h4><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+            <p class="article-content">{{post.snippet}}</p>
+          </div>
+        </article>
+    {% endfor %}
+      </div>
         <!-- <div class="col-md-4">
           <div class="content-section">
             <h3>Our Sidebar</h3>
@@ -32,13 +33,35 @@
             </p>
           </div>
         </div> -->
+
       </div>
+      <br><br><br>
     </main>
     
 
 {% endblock %}
 
 {% block navbtn %}
-	<a class="btn btn-outline-primary" href="{% url 'post-create' %}">Add Post</a>
+  {% if user.is_authenticated %}
+
+      <div class="nav-item">
+       <a class="btn btn-primary btn-sm" href="{% url 'post-create' %}" style="float: left;">Add Post</a>
+     </div>
+
+      <div class="nav-item">
+       <a class="btn btn-primary btn-sm mx-2" href="{% url 'add-category' %}">Add Category</a>
+     </div>
+
+  {% else %}
+
+      <div class="nav-item">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}">Signup</a>
+      </div>  
+
+      <div class="nav-item">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}">Login</a>
+      </div>
+
+  {% endif %}
 
 {% endblock %}

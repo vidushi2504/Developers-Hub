@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+
+	{% block body %}
+
+    <h2>Post Categories</h2>
+    <br>        
+      {% for item in cat_menu_list %}
+        <h5><a class="dropdown-item" href="{% url 'category' item %}">{{ item }}</a></h5>
+      {% endfor %}
+
+	    
+	{% endblock %}

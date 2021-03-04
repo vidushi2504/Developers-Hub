@@ -3,14 +3,13 @@
 {% block body %}
 
 <div class="container my-4">
-	<h3>Blog Post</h3>
+	<h3>Add a new Category</h3>
 	<br><br>
 	<form method='Post' >
 		{% csrf_token %}
-			{{ form.media }}
-			{{ form.as_p }}
+			 {{ form.as_p }}
 
-		  <button type="submit" class="btn btn-primary">Post</button> 
+		  <button type="submit" class="btn btn-primary">Add Category</button> 
 	</form>
 	<br><br>
 </div>

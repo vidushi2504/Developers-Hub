@@ -5,7 +5,11 @@ from .views import (
 	PostDetailView,
 	PostCreateView,
 	PostUpdateView,
-	PostDeleteView
+	PostDeleteView,
+	AddCommentView,
+	AddCategoryView,
+	CategoryView,
+	CategoryListView,
 )
 from . import views
 
@@ -15,4 +19,8 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('post/<int:pk>/comment/', AddCommentView.as_view(), name='add-comment'),
+    path('add_category/', AddCategoryView.as_view(), name='add-category'),
+    path('category/<str:cats>/', CategoryView, name='category'),
+    path('category-list/', CategoryListView, name='category-list'),
 ]
