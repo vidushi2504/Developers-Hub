@@ -76,7 +76,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class AddCommentView(CreateView):
 	model = Comment
 	template_name = 'home/add_comment.html'
-	fields = ['name', 'body']
+	fields = ['body']
 	success_url = reverse_lazy('home')
 
 	def form_valid(self, form):

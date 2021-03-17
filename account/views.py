@@ -101,3 +101,6 @@ def view_posts(request, userid):
 		'posts':posts
 	}
 	return render(request, "account/viewpost.html", context)
+
+def add_experience(request):
+	pass

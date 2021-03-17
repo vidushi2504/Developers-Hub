@@ -19,10 +19,10 @@ class Post(models.Model):
 	snippet = models.CharField(max_length= 200)
 	content = RichTextField(blank=True, null=True)
 	date_posted = models.DateTimeField(default = timezone.now)
-	author = models.ForeignKey(User, on_delete= models.CASCADE)
+	author = models.ForeignKey(User, on_delete= models.CASCADE, null=True)
 	category = models.CharField(max_length=255, default='Coding')
-	#done
-	#assigned to
+	mentor=models.CharField(max_length=255, null=True)
+	done=models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.title + ' | ' + str(self.author)
@@ -32,7 +32,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
 	post = models.ForeignKey(Post, related_name='comments', on_delete= models.CASCADE)
-	name = models.CharField(max_length=255, default='user')
+	user=models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	body = models.TextField()
 	date_added = models.DateTimeField(default = timezone.now)
 
