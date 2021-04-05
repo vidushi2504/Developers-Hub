@@ -32,19 +32,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
 	post = models.ForeignKey(Post, related_name='comments', on_delete= models.CASCADE)
-	user=models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	author = models.ForeignKey(User, on_delete= models.CASCADE)
 	body = models.TextField()
 	date_added = models.DateTimeField(default = timezone.now)
 
 	def __str__(self):
-		return self.post.title + ' | ' + str(self.name)
-
-
-# class Comment(models.Model):
-# 	post = models.ForeignKey(Post, related_name='comments', on_delete= models.CASCADE)
-# 	author = models.ForeignKey(User, on_delete= models.CASCADE, default=1)
-# 	body = models.TextField()
-# 	date_added = models.DateTimeField(default = timezone.now)
-
-# 	def __str__(self):
-# 		return self.post.title + ' | ' + str(self.name)
+		return self.post.title + ' | ' + str(self.author)

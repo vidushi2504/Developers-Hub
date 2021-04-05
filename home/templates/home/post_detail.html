@@ -37,7 +37,7 @@
             <br>
             {% for comment in post.comments.all %}
                 <strong>
-                    {{ comment.user.username }} - {{ comment.date_added }}
+                    {{ comment.author }} - {{ comment.date_added }}
                 </strong>
                 <br>
                 {{ comment.body }}
