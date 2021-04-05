@@ -19,10 +19,10 @@ class Post(models.Model):
 	snippet = models.CharField(max_length= 200)
 	content = RichTextField(blank=True, null=True)
 	date_posted = models.DateTimeField(default = timezone.now)
-	author = models.ForeignKey(User, on_delete= models.CASCADE, null=True)
+	author = models.ForeignKey(User, on_delete= models.CASCADE)
 	category = models.CharField(max_length=255, default='Coding')
-	mentor=models.CharField(max_length=255, null=True)
-	done=models.BooleanField(default=False)
+	done = models.BooleanField(default=False)
+	assign_to = models.ForeignKey(User,related_name='assign_to', on_delete=models.CASCADE, null=True)
 
 	def __str__(self):
 		return self.title + ' | ' + str(self.author)

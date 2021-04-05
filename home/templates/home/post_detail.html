@@ -20,9 +20,24 @@
         </article>
         {% if object.author == user %}
           <div>
-            <a class="btn btn-outline-secondary bt-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-            <a class="btn btn-outline-danger bt-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+            <a class="btn btn-outline-secondary bt-sm mt-1 mb-2" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-outline-danger bt-sm mt-1 mb-2" href="{% url 'post-delete' object.id %}">Delete</a>
+            <!-- <a class="btn btn-outline-primary bt-sm mt-1 mb-1" style="float: right;" href="">Done</a> -->
           </div>
+          <form method="POST"> 
+            {% csrf_token %}
+            <select name="assigned">
+              <option class="mt-1" selected disabled="true"> Select User</option>
+              {% if not post.comments.all %}
+                        <option>N/A</option>
+                    {% else %}
+                        {% for comment in post.comments.all %}
+                            <option>{{ comment.author }}</option>
+                        {% endfor %}
+                    {% endif %}
+            </select>
+            <input type="submit" value="Assign" name="">
+          </form>
         {% endif %}
         <br>
         <hr>    

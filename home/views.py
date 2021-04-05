@@ -38,6 +38,14 @@ class PostDetailView(DetailView):
 	model = Post
 	# template_name = 'home/post_detail.html'
 
+	# def post(self, request, *args, **kwargs):
+	# 	if request.POST.get('assigned'):
+	# 		savevalue = Post()
+	# 		print(request.POST.get('assigned'))
+	# 		savevalue.assign = request.POST.get('assigned')
+	# 		savevalue.save()
+	# 		return render(request, 'home/post_detail.html')
+
 	def get_context_data(self, *args, **kwargs):
 		post_available = get_object_or_404(Post, id=self.kwargs['pk'])
 		cat_menu = Category.objects.all()
