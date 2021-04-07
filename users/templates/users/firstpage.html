@@ -1,14 +1,38 @@
 {% extends 'users/base.html' %}
 
 {% block body %}
+
+<div class="content vertical-center">
+	<div class="row my-4">
+		<div class="col my-4">
+			<h1>Developer's Hub</h1>
+			<br />
+			<a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+			<a class="btn btn-primary ml-2" href="{% url 'signup' %}">Sign Up</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block css %}
 	<style>
-		div{
-			background-image: url('static/image/192398.jpg');
+		 vertical-center {
+		  min-height: 100%;  
+		  min-height: 100vh; 
+
+		  display: flex;
+		  align-items: center;
+		}
+		 body{
+		 	background-image: url('/static/images/dhbgd.jfif');
+		 }
+		 .content{
+		 	text-align: center;
+		}
+		 body h1{
+		 	color: white;
 		}
 	</style>
 {% endblock %}
-
-{% block navbtn %}
-	<a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
-	<a class="btn btn-outline-primary ml-2" href="{% url 'signup' %}">Sign Up</a>
-{% endblock %}
+    

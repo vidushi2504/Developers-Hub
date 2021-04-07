@@ -9,8 +9,10 @@ from django.views.generic import (
 )
 from .forms import PostForm, UpdateForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, User
+from account.models import Experience
 # Create your views here.
 
 def home(request):
@@ -106,3 +108,29 @@ def CategoryView(request, cats):
 def CategoryListView(request):
 	cat_menu_list = Category.objects.all()
 	return render(request, 'home/category_list.html', {'cat_menu_list': cat_menu_list})
+
+
+def updatePost(request, pk):
+	post=Post.objects.filter(id=pk)[0]
+	potential_mentors=Comment.objects.filter(post=post)
+	categories=Category.objects.all()
+
+	if request.method=='POST':
+		post.title=request.POST.get('title', '')
+		post.snippet=request.POST.get('snippet', '')
+		post.content=request.POST.get('content', '')
+		post.category=request.POST.get('category', '')
+		mentorUsername=request.POST.get('mentor', '')
+		if(mentorUsername):
+			post.mentor=User.objects.filter(username=mentorUsername)
+		post.save()
+		if request.POST['complete']:
+			pass
+		return redirect('post-detail', pk=pk)
+
+	context={
+		'obj': post,
+		'mentors': potential_mentors, 
+		'categories': categories,
+	}
+	return render(request, 'home/postUpdate.html', context)

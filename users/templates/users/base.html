@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link href="/static/styles.css" rel="stylesheet"/>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
@@ -23,10 +21,15 @@
 
     <title>Developer's Hub</title>
     <style>
+         body {
+          /* Margin bottom by footer height */
+          margin-bottom: 60px !important;
+        }
         html {
           position: relative;
           min-height: 100%;
         }
+        
         nav{
           position: fixed;
         }
@@ -34,6 +37,7 @@
           /* Margin bottom by footer height */
           margin-bottom: 60px;
         }
+
         .footer {
           position: absolute;
           bottom: 0;
@@ -41,7 +45,10 @@
           /* Set the fixed height of the footer here */
           height: 60px;
           background-color: #f5f5f5;
+          bottom: 0;
         }
+
+        {% block css %}{% endblock %}
     </style>
   </head>
   <link rel="stylesheet" type="text/css" href="{% static 'css/post.css' %}">
@@ -56,38 +63,15 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button> 
-        {% if cat_menu %}
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'firstpage' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color: white;">
-                  Category
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% for item in cat_menu %}
-                    <a class="dropdown-item" href="{% url 'category' item %}">{{item}}</a>
-                  {% endfor %}
-                </div>
-              </li>
-            </ul>
-          </div>
-          {% else %}
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'category-list' %}" style="color: white;">Categories<span class="sr-only">(current)</span></a>
-                </li>
-              </ul>
-            </div>
-          {% endif %}     
-
     {% block navbtn %}
 
     {% endblock %}
 
         {% if request.user.is_authenticated %}
+        <div class="ml-auto">
           <a class="" href="{% url 'account' request.user.id %}" style="color:white;">{{request.user}}</a>
           <a class="btn btn-primary mx-2 btn-sm" href="{% url 'logout' %}">Logout</a>
+        </div>
         {% endif %}
         
     </nav>
