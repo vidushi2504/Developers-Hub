@@ -12,7 +12,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Category, User
-from account.models import Experience
+from account.models import Experience, Account
+import datetime
 # Create your views here.
 
 def home(request):
@@ -25,10 +26,10 @@ def home(request):
 
 class PostListView(ListView):
 	model = Post
-	template_name = 'home/home.html' #<app>/<model>_<viewtype>.html
+	template_name = 'home/home.html' # <app>/<model>_<viewtype>.html
 	context_object_name = 'posts'
 	cats = Category.objects.all()
-	ordering = ['-date_posted']	#newest to oldest
+	ordering = ['-date_posted']	# newest to oldest
 
 	def get_context_data(self, *args, **kwargs):
 		cat_menu = Category.objects.all()
@@ -116,16 +117,29 @@ def updatePost(request, pk):
 	categories=Category.objects.all()
 
 	if request.method=='POST':
-		post.title=request.POST.get('title', '')
-		post.snippet=request.POST.get('snippet', '')
+		getTitle=request.POST.get('title', '')
+		post.title=getTitle
+		getSnippet=request.POST.get('snippet', '')
+		post.snippet=getSnippet
 		post.content=request.POST.get('content', '')
 		post.category=request.POST.get('category', '')
 		mentorUsername=request.POST.get('mentor', '')
-		if(mentorUsername):
-			post.mentor=User.objects.filter(username=mentorUsername)
+
+		if mentorUsername!="Choose a mentor" :
+			getMentor=User.objects.filter(username=mentorUsername)[0]
+			post.assign_to=getMentor
+
+		check=request.POST.get('complete', False)
+		if check: 
+			post.done=True
+			if mentorUsername!="Choose a mentor" :
+				obj=Experience(user=getMentor, title=getTitle, description=getSnippet, startdate=post.date_posted.date(), enddate=datetime.datetime.now().date())
+				acc=Account.objects.filter(user=getMentor)[0]
+				acc.reputation_points+=1000
+				acc.save()
+				obj.save()
 		post.save()
-		if request.POST['complete']:
-			pass
+
 		return redirect('post-detail', pk=pk)
 
 	context={

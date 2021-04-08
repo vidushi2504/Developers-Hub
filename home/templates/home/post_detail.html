@@ -5,7 +5,7 @@
   {% endblock %} -->
 
   {% block body %}
-        <article class="media content-section">
+        <article class="media content-section border-0">
           <!--<img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">-->
           <div class="media-body">
             <div class="article-metadata">
@@ -13,38 +13,39 @@
               <small class="text-muted">{{ object.category }}</small>
               <small class="text-muted" style="float: right;">{{ object.date_posted|date:"F d, Y" }}</small>                
             </div>
-
             <h2 class="article-title">{{ object.title }}</h2>
+
             <p class="article-content">{{ object.content|safe }}</p>
           </div>
         </article>
         {% if object.author == user %}
           <div>
-            <a class="btn btn-outline-secondary bt-sm mt-1 mb-2" href="{% url 'post-update' object.id %}">Update</a>
+            {% if object.done == False %}
+              <a class="btn btn-outline-secondary bt-sm mt-1 mb-2" href="{% url 'post-update' object.id %}">Update</a>
+            {% else %}
+               <button type="button" style="float: right;"class="btn btn-success">Completed!</button>
+            {% endif %}
             <a class="btn btn-outline-danger bt-sm mt-1 mb-2" href="{% url 'post-delete' object.id %}">Delete</a>
             <!-- <a class="btn btn-outline-primary bt-sm mt-1 mb-1" style="float: right;" href="">Done</a> -->
           </div>
-          </form>
         {% endif %}
         <br>
         <hr>    
         <h2>Comment Section</h2>
-        <br>
         {% if not post.comments.all %}
             <a class="btn btn-primary my-4" href="{% url 'add-comment' post.pk %}">Be the first one to comment!</a>
         {% else %}
             <a class="btn btn-primary my-4" href="{% url 'add-comment' post.pk %}">Add a comment</a>
             <br>
             {% for comment in post.comments.all %}
-                <strong>
-                    {{ comment.author }} - {{ comment.date_added }}
-                </strong>
+                <p>
+                    <a href="{% url 'account' comment.author.id %}">{{ comment.author }}</a> -<small class="text-muted"> {{ comment.date_added }}</small>
                 <br>
-                {{ comment.body }}
-                <br><br>
+                {{ comment.body }}</p>
+                <br>
             {% endfor %}
             <hr>
         {% endif %}
-    <br><br>
+    <br>
       
   {% endblock %}

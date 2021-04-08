@@ -44,17 +44,21 @@
 			 </div>
 			 <div class="col">
 			    <div class="container my-4">
-				    {% for i in experiences %}
-				    	<div class="card">
-						  <div class="card-header">
-						    <h6>{{ i.title }}</h6>
-						  </div>
-						  <div class="card-body">
-						    <p>{{ i.description }}</p>
-						    <p>{{ i.startdate }} - {{ i.enddate }}</p>
-						  </div>
-						</div>
-				    {% endfor%}
+			    	{% if experiences %}
+			    	<h3>Experience</h3>
+			    	<br />
+					    {% for i in experiences %}
+					    	<div class="card">
+							  <div class="card-header">
+							    <h6>{{ i.title }}</h6>
+							  </div>
+							  <div class="card-body">
+							    <p>{{ i.description }}</p>
+							    <p>From {{ i.startdate }} to {{ i.enddate }}</p>
+							  </div>
+							</div>
+					    {% endfor%}
+					{% endif %}
 				</div>
 			 </div>
 		</div>

@@ -25,21 +25,21 @@
 
 		  <div class="form-group my-4">
 		  	<label for="category">Catogory</label>
-		    <select class="custom-select mr-sm-2" id="dropdown1" name="category" value="{{ obj.category }}" required>
+		    <select class="custom-select mr-sm-2" id="dropdown1" name="category" required>
 			  	<option selected disabled>Choose a category</option>
 			  	{% for i in categories %}
-			  		<option value="{{ i.name }}">{{ i.name }}</option>
+			  		<option value="{{ i.name }}" {% if i.name == obj.category %}selected{% endif %}>{{ i.name }}</option>
 			  	{% endfor %}
 			  </select>
 		  </div>
 
 		  <div class="form-group my-4">
 		  	<label for="category">Mentor</label>
-		    <select class="custom-select mr-sm-2" id="dropdown2" name="mentor" value="{{ obj.assign_to }}" required>
+		    <select class="custom-select mr-sm-2" id="dropdown2" name="mentor">
 			  	<option selected>Choose a mentor</option>
 			  	{% for i in mentors %}
-			  		{% if i.author != request.user.is_authenticated %}
-			  			<option value="{{ i.author.username }}">{{ i.author.username }}</option>
+			  		{% if i.author != request.user %}
+			  			<option value="{{ i.author.username }}" {% if i.author == obj.assign_to %}selected{% endif %}>{{ i.author.username }}</option>
 			  		{% endif %}
 			  	{% endfor %}
 			  </select>
