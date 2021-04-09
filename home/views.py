@@ -154,6 +154,7 @@ def updatePost(request, pk):
 
 def search(request):
 	query = request.GET['query']
+<<<<<<< Updated upstream
 	if len(query)>80:
 		posts=[]
 	else:
@@ -161,5 +162,9 @@ def search(request):
 		postscontent = Post.objects.filter(content__icontains=query)
 		posts = poststitle.union(postscontent)
 	context = {'posts':posts, 'query':query}
+=======
+	posts = Post.objects.filter(title__icontains = query)
+	context = {'posts':posts}
+>>>>>>> Stashed changes
 	return render(request, 'home/search.html', context)
 	# return HttpResponse('This is search')

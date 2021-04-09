@@ -6,6 +6,7 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
+<<<<<<< Updated upstream
         <h2>Search Results</h2><br><br>
         {% if not posts %}
             <p>No search results found!</p> 
@@ -35,6 +36,22 @@
               </article>
           {% endfor %}
         {% endif %}
+=======
+        {% for post in posts %}
+        <article class="media content-section" class="item">
+          <!--<img class="rounded-circle article-img" src="{{ post.img }}">-->
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author }}</a>
+              <small class="text-muted">{{ post.category }}</small>
+              <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h4><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+            <p class="article-content">{{post.snippet}}</p>
+          </div>
+        </article>
+    {% endfor %}
+>>>>>>> Stashed changes
       </div>
     </div> 
 
