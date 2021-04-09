@@ -7,7 +7,6 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
         {% for post in posts %}
-<<<<<<< Updated upstream
           {% if not post.done %}
               <article class="media content-section" class="item">
                 <!--<img class="rounded-circle article-img" src="{{ post.img }}">-->
@@ -22,7 +21,6 @@
                 </div>
               </article>
           {% endif %}
-=======
         <article class="media content-section" class="item">
           <!--<img class="rounded-circle article-img" src="{{ post.img }}">-->
           <div class="media-body">
@@ -35,7 +33,6 @@
             <p class="article-content">{{post.snippet}}</p>
           </div>
         </article>
->>>>>>> Stashed changes
     {% endfor %}
       </div>
     </div> 
