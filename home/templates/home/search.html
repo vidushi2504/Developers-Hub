@@ -6,8 +6,21 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
-        {% for post in posts %}
-          {% if not post.done %}
+        <h2>Search Results</h2><br><br>
+        {% if not posts %}
+            <p>No search results found!</p> 
+
+            Your search query: <b>{{query}}</b> did not match any documents.<br><br>
+            Suggestions:
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</are>
+              <li>Try more general keywords.</li>
+            </ul>
+            
+        {% else %}
+
+          {% for post in posts %}
               <article class="media content-section" class="item">
                 <!--<img class="rounded-circle article-img" src="{{ post.img }}">-->
                 <div class="media-body">
@@ -20,8 +33,8 @@
                   <p class="article-content">{{post.content|truncatechars:150|safe}}</p>
                 </div>
               </article>
-          {% endif %}
-    {% endfor %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div> 
 
@@ -55,19 +68,15 @@
               </li>
             </ul>
           </div>
-          <form method="get" action="search" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-0 btn-sm" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
-            <button class="btn btn-success btn-sm my-2 my-sm-0 ml-2 mr-5" type="submit">Search</button>
-          </form>
           {% endif %}   
 
   {% else %}
 
-      <div class="nav-item ">
-        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}">Sign Up</a>
+      <div class="nav-item ml-auto">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}">Signup</a>
       </div>  
 
-      <div class="nav-item ">
+      <div class="nav-item ml-auto">
         <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}">Login</a>
       </div>
 

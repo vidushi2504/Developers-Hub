@@ -8,7 +8,7 @@ from django.views.generic import (
 	DeleteView
 )
 from .forms import PostForm, UpdateForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Category, User
@@ -64,17 +64,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 		form.instance.author = self.request.user
 		return super().form_valid(form)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-	model = Post
-	form_class = UpdateForm
+# class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+# 	model = Post
+# 	form_class = UpdateForm
 
-	def form_valid(self, form):
-		form.instance.author = self.request.user
-		return super().form_valid(form)
+# 	def form_valid(self, form):
+# 		form.instance.author = self.request.user
+# 		return super().form_valid(form)
 
-	def test_func(self):
-		post = self.get_object()
-		return self.request.user == post.author
+# 	def test_func(self):
+# 		post = self.get_object()
+# 		return self.request.user == post.author
 		
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 	model = Post
@@ -119,8 +119,6 @@ def updatePost(request, pk):
 	if request.method=='POST':
 		getTitle=request.POST.get('title', '')
 		post.title=getTitle
-		getSnippet=request.POST.get('snippet', '')
-		post.snippet=getSnippet
 		post.content=request.POST.get('content', '')
 		post.category=request.POST.get('category', '')
 		mentorUsername=request.POST.get('mentor', '')
@@ -133,13 +131,18 @@ def updatePost(request, pk):
 		if check: 
 			post.done=True
 			if mentorUsername!="Choose a mentor" :
-				obj=Experience(user=getMentor, title=getTitle, description=getSnippet, startdate=post.date_posted.date(), enddate=datetime.datetime.now().date())
+				obj=Experience(user=getMentor, title=getTitle, startdate=post.date_posted.date(), enddate=datetime.datetime.now().date())
 				acc=Account.objects.filter(user=getMentor)[0]
 				acc.reputation_points+=1000
 				acc.save()
 				obj.save()
 		post.save()
 
+		if(mentorUsername):
+			post.assign_to=User.objects.filter(username=mentorUsername)[0]
+		post.save()
+		# if request.POST['complete']:
+		# 	pass
 		return redirect('post-detail', pk=pk)
 
 	context={
@@ -147,4 +150,16 @@ def updatePost(request, pk):
 		'mentors': potential_mentors, 
 		'categories': categories,
 	}
-	return render(request, 'home/postUpdate.html', context)
+	return render(request, 'home/postUpdate.html', context) 
+
+def search(request):
+	query = request.GET['query']
+	if len(query)>80:
+		posts=[]
+	else:
+		poststitle = Post.objects.filter(title__icontains = query)
+		postscontent = Post.objects.filter(content__icontains=query)
+		posts = poststitle.union(postscontent)
+	context = {'posts':posts, 'query':query}
+	return render(request, 'home/search.html', context)
+	# return HttpResponse('This is search')

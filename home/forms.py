@@ -10,11 +10,10 @@ for item in choices:
 class PostForm(forms.ModelForm):
 	class Meta:
 		model = Post
-		fields = ('title', 'snippet', 'content', 'category')
+		fields = ('title', 'content', 'category')
 
 		widgets = {
 			'title': forms.TextInput(attrs={'class': 'form-control'}),
-			'snippet': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter text snippet upto 200 words to be visible on home page....', 'rows':5, 'cols':90}),
 			'content': forms.Textarea(attrs={'class': 'form-control'}),
 			'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
 		}
@@ -22,11 +21,10 @@ class PostForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
 	class Meta:
 		model = Post
-		fields = ('title', 'snippet', 'content', 'category', 'done')
+		fields = ('title', 'content', 'category', 'done')
 
 		widgets = {
 			'title': forms.TextInput(attrs={'class': 'form-control'}),
-			'snippet': forms.Textarea(attrs={'class': 'form-control'}),
 			'content': forms.Textarea(attrs={'class': 'form-control'}),
 			'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
 		}

@@ -24,7 +24,7 @@ class Skill(models.Model):
 class Experience(models.Model):
 	user=models.ForeignKey(User, on_delete=models.CASCADE)
 	title=models.CharField(max_length=300)
-	description=models.TextField()
+	description=models.TextField(null=True)
 	startdate=models.CharField(max_length=200)
 	enddate=models.CharField(max_length=200)
 	

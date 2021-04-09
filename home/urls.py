@@ -23,4 +23,5 @@ urlpatterns = [
     path('add_category/', AddCategoryView.as_view(), name='add-category'),
     path('category/<str:cats>/', CategoryView, name='category'),
     path('category-list/', CategoryListView, name='category-list'),
+    path('search/', views.search, name='search'),
 ]
