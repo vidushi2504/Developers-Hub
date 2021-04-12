@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Account, Skill, Experience
 from home.models import Post
 from django.contrib.auth.models import User
 from django.views.generic import View
+from django.core.mail import send_mail
+from django.contrib import messages
 
 # Create your views here.
 def user_account(request, userid):
@@ -39,6 +41,7 @@ def user_creation(request):				# change to class based view
 		for i in skills:
 			skill_obj=Skill(user=user, skill_value=i)
 			skill_obj.save()
+		messages.success(request, "Account created successfully!")
 		return redirect('home')
 
 	return render(request, "account/creation.html")
@@ -84,6 +87,7 @@ def edit_details(request):
 		for i in skill_obj:
 			if i not in skills:
 				i.delete()
+		messages.success(request, "Details edited successfully!")
 		return redirect('account', request.user.id)
 
 	context = {
@@ -95,6 +99,7 @@ def edit_details(request):
 	return render(request, "account/editdetails.html", context)
 
 def view_posts(request, userid):
+
 	user=User.objects.get(id=userid)
 	posts=Post.objects.filter(author=user)
 	context={
@@ -102,5 +107,44 @@ def view_posts(request, userid):
 	}
 	return render(request, "account/viewpost.html", context)
 
-def add_experience(request):
-	pass
+def delete_experience(request, exp_id):
+
+	try:
+		obj=Experience.objects.filter(id=exp_id)
+		obj.delete()
+		messages.success(request, "Experience deleted successfully!")
+	except:
+		messages.warning(request, "Something went wrong. Please try again!")
+	return redirect(request.META.get('HTTP_REFERER'))
+
+def edit_experience(request, exp_id):
+
+	try:
+		obj=Experience.objects.filter(id=exp_id)[0]
+		title=request.POST.get('title')
+		description=request.POST.get('description')
+		obj.title=title
+		obj.description=description
+		print(title)
+		print(description)
+		obj.save()
+		messages.success(request, "Experience edited successfully!")
+	except:
+		messages.warning(request, "Something went wrong. Please try again!")
+	return redirect(request.META.get('HTTP_REFERER'))
+
+def send_message(request, acc_id):
+
+	try:
+		account=Account.objects.filter(id=acc_id)[0]
+		body=request.POST.get('message', '')
+		send_mail(
+			"Message from "+account.user.username+" via Developer's Hub",
+			body+'You can contact me via email: '+request.user.email,
+			'info.developershub@gmail.com',
+			[account.email],
+			fail_silently=False)
+		messages.success(request, "Message sent successfully!")
+	except:
+		messages.warning(request, "Something went wrong. Please try again!")
+	return redirect(request.META.get('HTTP_REFERER'))

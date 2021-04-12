@@ -1,5 +1,11 @@
 {% extends 'users/base.html' %}
 
+{% block head %}
+
+	<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+{% endblock %}
+
 {% block body %}
 
 	<div class="container">
@@ -17,7 +23,9 @@
 		    <label for="content">Content</label>
 		    <textarea type="textarea" class="form-control" id="content" placeholder="" name="content" required rows="7">{{ obj.content }}</textarea>
 		  </div>
-
+		  <script>
+		  	CKEDITOR.replace('content');
+		  </script>
 		  <div class="form-group my-4">
 		  	<label for="category">Catogory</label>
 		    <select class="custom-select mr-sm-2" id="dropdown1" name="category" required>
@@ -56,10 +64,3 @@
 
 {% endblock %}
 
-{% block head %}
-
-<style>
-	
-</style>
-
-{% endblock %}
