@@ -13,7 +13,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Category, User
 from account.models import Experience, Account
-import datetime
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
@@ -39,15 +39,7 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
 	model = Post
-	# template_name = 'home/post_detail.html'
-
-	# def post(self, request, *args, **kwargs):
-	# 	if request.POST.get('assigned'):
-	# 		savevalue = Post()
-	# 		print(request.POST.get('assigned'))
-	# 		savevalue.assign = request.POST.get('assigned')
-	# 		savevalue.save()
-	# 		return render(request, 'home/post_detail.html')
+	context_object_name = 'post'
 
 	def get_context_data(self, *args, **kwargs):
 		post_available = get_object_or_404(Post, id=self.kwargs['pk'])
@@ -84,7 +76,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 		post = self.get_object()
 		return self.request.user == post.author
 
-class AddCommentView(CreateView):
+class AddCommentView(LoginRequiredMixin, CreateView):
 	model = Comment
 	template_name = 'home/add_comment.html'
 	fields = ['body']
@@ -96,21 +88,23 @@ class AddCommentView(CreateView):
 		return super().form_valid(form)
 
 
-class AddCategoryView(CreateView):
+class AddCategoryView(LoginRequiredMixin, CreateView):
 	model = Category
 	template_name = 'home/add_category.html'
 	fields = ['name']
 	success_url = reverse_lazy('home')
 
+@login_required
 def CategoryView(request, cats):
 	category_posts = Post.objects.filter(category = cats.replace('-', ' '))
 	return render(request, 'home/categories.html', {'cats':cats.title().replace('-', ' '), 'category_posts':category_posts})
 
+@login_required
 def CategoryListView(request):
 	cat_menu_list = Category.objects.all()
 	return render(request, 'home/category_list.html', {'cat_menu_list': cat_menu_list})
 
-
+@login_required
 def updatePost(request, pk):
 	post=Post.objects.filter(id=pk)[0]
 	potential_mentors=Comment.objects.filter(post=post)
@@ -137,12 +131,9 @@ def updatePost(request, pk):
 				acc.save()
 				obj.save()
 		post.save()
-
-		if(mentorUsername):
+		if(mentorUsername != "Choose a mentor"):
 			post.assign_to=User.objects.filter(username=mentorUsername)[0]
 		post.save()
-		# if request.POST['complete']:
-		# 	pass
 		return redirect('post-detail', pk=pk)
 
 	context={
@@ -152,6 +143,7 @@ def updatePost(request, pk):
 	}
 	return render(request, 'home/postUpdate.html', context) 
 
+@login_required
 def search(request):
 	query = request.GET['query']
 	if len(query)>80:
@@ -159,9 +151,6 @@ def search(request):
 	else:
 		poststitle = Post.objects.filter(title__icontains = query)
 		postscontent = Post.objects.filter(content__icontains=query)
-		posts = poststitle.union(postscontent)
+		posts = postscontent.union(poststitle)
 	context = {'posts':posts, 'query':query}
-	posts = Post.objects.filter(title__icontains = query)
-	context = {'posts':posts}
 	return render(request, 'home/search.html', context)
-	# return HttpResponse('This is search')

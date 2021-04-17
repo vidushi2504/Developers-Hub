@@ -2,17 +2,25 @@
 
 {% block body %}
 	{% for post in posts %}
+      <style>
+        .article-img {
+                border-radius: 99em;
+                border: .5px solid black;
+                background-color: #eee;
+              }
+      </style>
         <article class="media content-section" class="item">
-                <!--<img class="rounded-circle article-img" src="{{ post.img }}">-->
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author }}</a>
-                    <small class="text-muted">{{ post.category }}</small>
-                    <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
-                  </div>
-                  <h4><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                  <p class="article-content">{{post.content|truncatechars:150|safe}}</p>
-                </div>
-              </article>
+          <img class="article-img rounded-circle my-2" src="{{ post.author.account.userImage.url }}"></img>
+          <div class="media-body ml-2 w3-round">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author|title }}</a>
+              <small class="text-muted">{{ post.category|title }}</small>
+              <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h4></h4>
+            <h4><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title|title }}</a></h4>
+            <p class="article-content">{{post.content|truncatechars:150|safe}}</p>
+          </div>
+        </article>
 	 {% endfor %}
 {% endblock %}

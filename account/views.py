@@ -6,8 +6,10 @@ from django.contrib.auth.models import User
 from django.views.generic import View
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def user_account(request, userid):
 
 	user=User.objects.filter(pk=userid).first()
@@ -45,6 +47,7 @@ def user_creation(request):				# change to class based view
 		return redirect('home')
 
 	return render(request, "account/creation.html")
+
 
 def edit_details(request):
 
@@ -107,6 +110,7 @@ def view_posts(request, userid):
 	}
 	return render(request, "account/viewpost.html", context)
 
+@login_required
 def delete_experience(request, exp_id):
 
 	try:
@@ -117,6 +121,7 @@ def delete_experience(request, exp_id):
 		messages.warning(request, "Something went wrong. Please try again!")
 	return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def edit_experience(request, exp_id):
 
 	try:
@@ -133,6 +138,7 @@ def edit_experience(request, exp_id):
 		messages.warning(request, "Something went wrong. Please try again!")
 	return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def send_message(request, acc_id):
 
 	try:

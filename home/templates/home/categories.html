@@ -3,23 +3,28 @@
 {% block body %}
 {% if category_posts %}
   <h2>{{ cats }} Posts</h2>
+  <br>
   <main role="main" class="container">
     <div class="row">
+      <div class="col-md-2"></div>
      <div class="col-md-8">
-    {% for post in category_posts %}
-      <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.img }}">
-            <div class="media-body">
+        {% for post in category_posts %}
+          <article class="media content-section" class="item">
+            <img class="article-img rounded-circle my-2" src="{{ post.author.account.userImage.url }}"></img>
+            <div class="media-body ml-2 w3-round">
               <div class="article-metadata">
-                <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author }}</a>
+                <a class="mr-2" href="{% url 'account' post.author.id %}">{{ post.author|title }}</a>
+                <small class="text-muted">{{ post.category|title }}</small>
                 <small class="text-muted" style="float:right;">{{ post.date_posted|date:"F d, Y" }}</small>
               </div>
-              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-              <p class="article-content">{{ post.content|safe }}</p>
+              <h4></h4>
+              <h4><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title|title }}</a></h4>
+              <p class="article-content">{{post.content|truncatechars:150|safe}}</p>
             </div>
-      </article>
-    {% endfor %}
-      </div>
+          </article>
+        {% endfor %}
+        <br><br>
+     </div>
     </div>
   </main>
 

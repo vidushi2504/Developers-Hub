@@ -20,9 +20,10 @@
 
     <title>Developer's Hub</title>
     <style>
-         body {
+        body {
           /* Margin bottom by footer height */
           margin-bottom: 60px !important;
+          background-color: #FFFACD;
         }
         html {
           position: relative;
@@ -31,10 +32,6 @@
         
         nav{
           position: fixed;
-        }
-        body {
-          /* Margin bottom by footer height */
-          margin-bottom: 60px;
         }
 
         .footer {
@@ -46,6 +43,15 @@
           background-color: #f5f5f5;
           bottom: 0;
         }
+        .imageborder {
+          height:35px; 
+          width:35px;
+          border-radius: 99em;
+          padding: .5px;
+          border: 1px solid white;
+          background-color: #eee;
+        }
+        
 
         {% block css %}{% endblock %}
     </style>
@@ -69,8 +75,10 @@
 
         {% if request.user.is_authenticated %}
           <div class="ml-auto">
-            <a class="" href="{% url 'account' request.user.id %}" style="color:white;">{{request.user}}</a>
-            <a class="btn btn-primary mx-2 btn-sm" href="{% url 'logout' %}">Logout</a>
+            <!-- src="../../../media/profile_pics/default.png" -->
+              <img class="imageborder rounded-circle my-1 mx-1" src="{{ request.user.account.userImage.url }}" width="30" height="30" alt=""></a>
+              <a class="mr-3" href="{% url 'account' request.user.id %}" style="color:white;">{{request.user|title}}</a>
+              <a class="btn btn-primary mx-2 btn-sm" href="{% url 'logout' %}">Logout</a>
           </div>
         {% endif %}
     </nav>

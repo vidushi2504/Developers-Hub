@@ -119,9 +119,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL = 'login'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 STATIC_URL = '/static/'
 
@@ -133,7 +136,8 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 MEDIA_URL='/media/'
 HOME_URL="/"
 HOME_URL_2="home"
-EXEMPT_URLS=["/login", "/signup", "/firstpage"]
+EXEMPT_URLS=["/login", "/signup"]
+EXEMPT_URLS_2=["/login", "/signup", "/home/"]
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
