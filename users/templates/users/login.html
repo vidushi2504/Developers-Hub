@@ -3,7 +3,7 @@
 {% block body %}
 
 	<div class="container my-4">
-	<h3>Login</h3>
+	<h3><i class="fas fa-sign-in-alt"></i> Login</h3>
 	<form method='Post' action='login'>
 		{% csrf_token %}
 
@@ -17,7 +17,7 @@
 	    <input type="password" class="form-control" id="password" placeholder="" name="password" required>
 	  </div>
 
-	  <button type="submit" class="btn btn-primary">Login</button>
+	  <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
 	</form>
 </div>
 
@@ -25,7 +25,7 @@
 
 {% block navbtn %}
 
-<a class="btn btn-primary btn-sm ml-auto" href="{% url 'signup' %}">Sign Up</a>
+<a class="btn btn-primary btn-sm ml-auto" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
 
 {% endblock %}
 

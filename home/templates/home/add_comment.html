@@ -3,13 +3,13 @@
 {% block body %}
 	
 	<div class="container my-4">
-		<h3>Add Comment...</h3>
+		<h3><i class="fas fa-plus"></i> Add Comment</h3>
 		<br><br>
 		<form method='Post' >
 			{% csrf_token %}
 				 {{ form.as_p }}
 
-			  <button type="submit" class="btn btn-primary">Add Comment</button> 
+			  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add Comment</button> 
 		</form>
 	</div>
 

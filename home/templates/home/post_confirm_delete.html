@@ -12,8 +12,8 @@
 		{% csrf_token %}
 			 {{ form.as_p }}
 
-		  <button type="submit" class="btn btn-outline-danger">Yes, Delete!</button> 
-		  <a class="btn btn-outline-primary" href="{% url 'post-detail' object.id %}" >Cancel</a>
+		  <button type="submit" class="btn btn-outline-danger">Delete</button> 
+		  <a class="btn btn-outline-primary" href="{% url 'post-detail' object.id %}" ><i class="far fa-window-close"></i> Cancel</a>
 	</form>
 </div>
 

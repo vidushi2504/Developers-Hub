@@ -4,7 +4,27 @@
   
   <main role="main" class="container">
     <div class="row">
-      <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <h4><i class="fas fa-star" style="color: gold;"></i> Top Contributors</h4>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"><i class="fas fa-user"></i> User</th>
+                <th scope="col"><i class="fas fa-bolt"></i> Points</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for people in top_people %}
+                <tr>
+                  <td scope='row'><a href="{% url 'account' people.id %}">{{people.user.username}}</a></td>
+                  <td>{{people.reputation_points}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>    
+      <div class="col-md-1"></div>
       <div class="col-md-8">
         {% for post in posts %}
           <style>
@@ -32,8 +52,6 @@
           {% endif %}
     {% endfor %}
       </div>
-    </div> 
-
       </div>
       <br><br><br>
     </main>
@@ -60,24 +78,24 @@
             </ul>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'post-create' %}" style="color: white; float:left;">+Add a Post</a>
+                <a class="nav-link" href="{% url 'post-create' %}" style="color: white; float:left;"><i class="fas fa-plus"></i> Add a Post</a>
               </li>
             </ul>
           </div>
           <form method="get" action="search" class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-0 btn-sm" type="search" placeholder="Search for a post" aria-label="Search" name="query" id="query">
-            <button class="btn btn-success btn-sm my-2 my-sm-0 ml-2 mr-5" type="submit">Search</button>
+            <button class="btn btn-success btn-sm my-2 my-sm-0 ml-2 mr-5" type="submit"><i class="fas fa-search"></i> Search</button>
           </form>
           {% endif %}   
 
   {% else %}
 
-      <div class="nav-item ">
-        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}">Sign Up</a>
+      <div class="nav-item ml-auto">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
       </div>  
 
-      <div class="nav-item ">
-        <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}">Login</a>
+      <div class="nav-item">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
       </div>
 
   {% endif %}

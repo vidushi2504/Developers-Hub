@@ -8,7 +8,7 @@
 	  <hr class="my-4">
 	  <p>“We can’t help everyone, but everyone can help someone.”</p>
 	  <p class="lead">
-	    <a class="btn btn-primary btn-lg" href="{% url 'home' %}" role="button">Read Posts</a>
+	    <a class="btn btn-primary btn-lg" href="{% url 'home' %}" role="button"><i class="fab fa-readme"></i> Read Posts</a>
 	  </p>
 	</div>
 
@@ -16,12 +16,12 @@
 
 {% block navbtn %}
 
-      <div class="nav-item">
-        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}">Sign Up</a>
+      <div class="nav-item ml-auto">
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
       </div>  
 
       <div class="nav-item">
-        <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-primary btn-sm mx-2" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
       </div>
 
 {% endblock %}

@@ -14,6 +14,7 @@ from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Category, User
 from account.models import Experience, Account
 from django.contrib.auth.decorators import login_required
+import datetime
 # Create your views here.
 
 def home(request):
@@ -32,9 +33,11 @@ class PostListView(ListView):
 	ordering = ['-date_posted']	# newest to oldest
 
 	def get_context_data(self, *args, **kwargs):
+		top_people=Account.objects.order_by('-reputation_points')[:5]
 		cat_menu = Category.objects.all()
 		context = super(PostListView, self).get_context_data(*args, **kwargs)
 		context["cat_menu"] = cat_menu
+		context['top_people']=top_people
 		return context
 
 class PostDetailView(DetailView):
@@ -127,12 +130,9 @@ def updatePost(request, pk):
 			if mentorUsername!="Choose a mentor" :
 				obj=Experience(user=getMentor, title=getTitle, startdate=post.date_posted.date(), enddate=datetime.datetime.now().date())
 				acc=Account.objects.filter(user=getMentor)[0]
-				acc.reputation_points+=1000
+				acc.reputation_points+=200
 				acc.save()
 				obj.save()
-		post.save()
-		if(mentorUsername != "Choose a mentor"):
-			post.assign_to=User.objects.filter(username=mentorUsername)[0]
 		post.save()
 		return redirect('post-detail', pk=pk)
 

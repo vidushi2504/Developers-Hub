@@ -9,11 +9,11 @@ class LoginRequiredMiddleware:
 		response=self.get_response(request)
 		return response
 
-	# def process_view(self, request, view_func, view_args, view_kwargs):		
-		
-	# 	url = request.path
-	# 	authenticated = request.user.is_authenticated
-	# 	if authenticated and (url==settings.HOME_URL or url in settings.EXEMPT_URLS):		
-	# 		return redirect(settings.HOME_URL_2)
-	# 	if not authenticated and (url!=settings.HOME_URL and url not in settings.EXEMPT_URLS_2):
-	# 		return redirect('login')
+	def process_view(self, request, view_func, view_args, view_kwargs):		
+
+		url = request.path
+		authenticated = request.user.is_authenticated
+		if authenticated and (url==settings.HOME_URL or url in settings.EXEMPT_URLS):		
+			return redirect(settings.HOME_URL_2)
+		if not authenticated and (url!=settings.HOME_URL and url not in settings.EXEMPT_URLS_2):
+			return redirect('login')

@@ -24,43 +24,37 @@
         {% if object.author == user %}
           <div>
             {% if object.done == False %}
-              <a class="btn btn-outline-secondary bt-sm mt-1 mb-2" href="{% url 'post-update' object.id %}">Update</a>
+              <a class="btn btn-outline-secondary bt-sm mt-1 mb-2" href="{% url 'post-update' object.id %}">
+              <i class="fas fa-edit"></i> Update</a>
             {% else %}
-               <button type="button" style="float: right;"class="btn btn-success active">Completed!</button>
+               <button type="button" style="float: right;"class="btn btn-success active"><i class="fas fa-check"></i> Completed</button>
             {% endif %}
-            <a class="btn btn-outline-danger bt-sm mt-1 mb-2" href="{% url 'post-delete' object.id %}">Delete</a>
+            <a class="btn btn-outline-danger bt-sm mt-1 mb-2" href="{% url 'post-delete' object.id %}">
+            <i class="fas fa-trash"></i> Delete</a>
           </div>
         {% endif %}
         {% if object.assign_to %}
-            <a href="#" class="btn btn-dark active " style="float: right;" role="button" aria-pressed="true">Assigned to  -->  {{ object.assign_to }}</a>
+            <a href="#" class="btn btn-dark active " style="float: right;" role="button" aria-pressed="true">Assigned to <i class="fas fa-arrow-right"></i> {{ object.assign_to }}</a>
             <br>
         {% endif %}
         <br>
         <hr>    
         <h2>Comment Section</h2>
-        {% if not post.comments.all %}
-          {% if user.is_authenticated %}
-            <a class="btn btn-primary my-4" href="{% url 'add-comment' post.pk %}">Be the first one to comment!</a>
-          {% else %}
-            <a class="btn btn-primary my-4" href="{% url 'login' %}">Be the first one to comment!</a>
-          {% endif %}
-        {% else %}
             {% if user.is_authenticated %}
-                <a class="btn btn-primary my-4" href="{% url 'add-comment' post.pk %}">Add a comment</a>
+                <a class="btn btn-primary my-4" href="{% url 'add-comment' post.pk %}"><i class="fas fa-plus"></i> Add a comment</a>
             {% else %}
-                <a class="btn btn-primary my-4" href="{% url 'login' %}">Add a comment</a>
+                <a class="btn btn-primary my-4" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login to comment</a>
             {% endif %}
             <br>
             
             {% for comment in post.comments.all %}
                 <p>
-                    <a href="{% url 'account' comment.author.id %}">{{ comment.author }}</a> -<small class="text-muted"> {{ comment.date_added }}</small>
+                    <a href="{% url 'account' comment.author.id %}">{{ comment.author }}</a> - <small class="text-muted"> {{ comment.date_added }}</small>
                 <br>
                 {{ comment.body }}</p>
                 
             {% endfor %}
             <hr>
-        {% endif %}
     <br>
       
   {% endblock %}

@@ -3,14 +3,14 @@
 {% block body %}
 
 <div class="container my-4">
-	<h3>Post</h3>
+	<h3><i class="fas fa-pen-alt"></i> Post</h3>
 	<br>
 	<form method='Post' >
 		{% csrf_token %}
 			{{ form.media }}
 			{{ form.as_p }}
 
-		  <button type="submit" class="btn btn-primary">Post</button> 
+		  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Post</button> 
 	</form>
 	<br>
 </div>
