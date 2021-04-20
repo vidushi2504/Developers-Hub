@@ -61,7 +61,9 @@
 		    {% if details.githubprofile %}
 		    	<a href="{{details.githubprofile}}"><i class="fas fa-link"></i> Github Profile Link</a><br>
 		    {% endif %}
-		    <p><i class="fas fa-align-center"></i> {{ details.bio }}</p>
+		    {% if details.bio %}
+		    	<p><i class="fas fa-align-center"></i> {{ details.bio }}</p>
+		    {% endif %}
 		    <br><br><br>
 		</div>
 	</div>

@@ -6,25 +6,24 @@
 	<h3><i class="fas fa-user-plus"></i> Sign Up</h3>
 	<form method='POST' action='signup'>
 		{% csrf_token %}
-
 		  <div class="form-group my-4">
 		    <label for="email">Email address</label>
-		    <input type="email" class="form-control" id="email" placeholder="" name="email" required>
+		    <input type="email" class="form-control" id="email" placeholder="" name="email" value="{{email}}" required>
 		  </div>
 
 		  <div class="form-group my-4">
 		    <label for="firstname">First Name</label>
-		    <input type="text" class="form-control" id="firstname" placeholder="" name="firstname" required>
+		    <input type="text" class="form-control" id="firstname" placeholder="" name="firstname" value="{{firstname}}" required>
 		  </div>
 
 		  <div class="form-group my-4">
 		    <label for="lastname">Last Name</label>
-		    <input type="text" class="form-control" id="lastname" placeholder="" name="lastname">
+		    <input type="text" class="form-control" id="lastname" placeholder="" value="{{lastname}}" name="lastname">
 		  </div>
 
 		  <div class="form-group my-4">
 		    <label for="username">Username</label>
-		    <input type="text" class="form-control" id="username" placeholder="" name="username" required>
+		    <input type="text" class="form-control" id="username" placeholder="" name="username" value="{{username}}"required>
 		  </div>
 
 		  <div class="form-group my-4">

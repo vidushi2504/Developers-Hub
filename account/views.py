@@ -130,8 +130,6 @@ def edit_experience(request, exp_id):
 		description=request.POST.get('description')
 		obj.title=title
 		obj.description=description
-		print(title)
-		print(description)
 		obj.save()
 		messages.success(request, "Experience edited successfully!")
 	except:

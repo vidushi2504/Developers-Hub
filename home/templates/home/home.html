@@ -1,4 +1,6 @@
 {% extends 'users/base.html' %}
+
+{% load static %}
   
 {% block body %}
   
@@ -17,7 +19,7 @@
             <tbody>
             {% for people in top_people %}
                 <tr>
-                  <td scope='row'><a href="{% url 'account' people.id %}">{{people.user.username}}</a></td>
+                  <td scope='row'><a href="{% url 'account' people.user.id %}">{{people.user.username}}</a></td>
                   <td>{{people.reputation_points}}</td>
                 </tr>
             {% endfor %}

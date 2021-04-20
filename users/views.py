@@ -43,7 +43,7 @@ def user_signup(request):
 		confirmpassword=request.POST.get('confirmpassword', '')
 		userCheck=User.objects.filter(username=username) | User.objects.filter(email=mail)
 		if userCheck:
-			messages.error(request, "Username or Email already exists!")
+			messages.error(request, "Username or email already exists")
 			return redirect("signup")
 		else:
 			if password==confirmpassword:
@@ -52,6 +52,13 @@ def user_signup(request):
 				messages.success(request, "Signed Up successfully")
 				return redirect("login")
 			else:
-				messages.error(request, "Passwords don't match!")
-				return redirect("signup")
+				messages.error(request, "Passwords do not match")
+
+				context={
+					'email': mail,
+					'firstname': first_name,
+					'lastname': last_name,
+					'username': username,
+				}
+				return render(request, 'users/signup.html', context)	
 	return render(request, 'users/signup.html')

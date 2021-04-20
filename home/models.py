@@ -22,8 +22,8 @@ class Post(models.Model):
 	author = models.ForeignKey(User, on_delete= models.CASCADE)
 	category = models.CharField(max_length=255, default='Coding')
 	done = models.BooleanField(default=False)
-	assign_to = models.ForeignKey(User,related_name='assign_to', on_delete=models.CASCADE, null=True)
-
+	assign_to = models.ForeignKey(User, related_name='assign_to', blank=True, null=True, on_delete=models.CASCADE)
+ 
 	def __str__(self):
 		return self.title + ' | ' + str(self.author)
 

@@ -13,7 +13,7 @@ class LoginRequiredMiddleware:
 
 		url = request.path
 		authenticated = request.user.is_authenticated
-		if authenticated and (url==settings.HOME_URL or url in settings.EXEMPT_URLS):		
-			return redirect(settings.HOME_URL_2)
-		if not authenticated and (url!=settings.HOME_URL and url not in settings.EXEMPT_URLS_2):
+		if authenticated and url in settings.EXEMPT_URLS:		
+			return redirect(settings.HOME_URL)
+		if not authenticated and url not in settings.ALLOWED_URLS:
 			return redirect('login')

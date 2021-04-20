@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,12 +137,12 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
-MEDIA_URL='/media/'
-HOME_URL="/"
-HOME_URL_2="home"
-EXEMPT_URLS=["/login", "/signup"]
-EXEMPT_URLS_2=["/login", "/signup", "/home/"]
+MEDIA_ROOT=os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL='/images/'
+
+HOME_URL="home"
+EXEMPT_URLS=["/login", "/signup", "/"]
+ALLOWED_URLS=["/login", "/signup", "/home/", "/"]
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'

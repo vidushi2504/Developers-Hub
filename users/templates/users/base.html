@@ -75,7 +75,7 @@
 
     {% endblock %}
 
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.path != "/account/creation" %}
           <div class="ml-auto">
             <!-- src="../../../media/profile_pics/default.png" -->
               <img class="imageborder rounded-circle my-1 mx-1" src="{{ request.user.account.userImage.url }}" width="30" height="30" alt=""></a>
