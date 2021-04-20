@@ -8,7 +8,8 @@ def firstpage(request):
 	return render(request, "users/firstpage.html")
 
 def user_login(request):
-
+	if request.user.is_authenticated:
+		return redirect('home')
 	if request.method=="POST":
 		user_name=request.POST.get('username', '')
 		user_password=request.POST.get('password', '')
@@ -33,7 +34,8 @@ def user_logout(request):
 	return redirect("/")
 
 def user_signup(request):
-
+	if request.user.is_authenticated:
+		return redirect('home')
 	if request.method=="POST":
 		mail=request.POST.get('email', '')
 		first_name=request.POST.get('firstname', '')

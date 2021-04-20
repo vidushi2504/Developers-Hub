@@ -7,20 +7,20 @@
   <main role="main" class="container">
     <div class="row">
         <div class="col-md-3">
-          <h4><i class="fas fa-star" style="color: gold;"></i> Top Contributors</h4>
+          <h4><i class="fas fa-star mt-5" style="color: gold;"></i> Top Contributors</h4>
           <br>
-          <table class="table">
+          <table class="table content-section">
             <thead>
               <tr>
-                <th scope="col"><i class="fas fa-user"></i> User</th>
+                <th scope="col"><i class="fas fa-user ml-4"></i> User</th>
                 <th scope="col"><i class="fas fa-bolt"></i> Points</th>
               </tr>
             </thead>
             <tbody>
             {% for people in top_people %}
                 <tr>
-                  <td scope='row'><a href="{% url 'account' people.user.id %}">{{people.user.username}}</a></td>
-                  <td>{{people.reputation_points}}</td>
+                  <td scope='row'><a class="ml-4" href="{% url 'account' people.user.id %}">{{people.user.username|title}}</a></td>
+                  <td >{{people.reputation_points}}</td>
                 </tr>
             {% endfor %}
             </tbody>

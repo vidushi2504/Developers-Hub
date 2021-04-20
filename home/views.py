@@ -14,7 +14,7 @@ from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Category, User
 from account.models import Experience, Account
 from django.contrib.auth.decorators import login_required
-import datetime
+
 # Create your views here.
 
 def home(request):
@@ -23,7 +23,6 @@ def home(request):
 		'posts': posts,
 	}
 	return render(request, 'home/home.html', context)
-
 
 class PostListView(ListView):
 	model = Post
@@ -90,6 +89,14 @@ class AddCommentView(LoginRequiredMixin, CreateView):
 		form.instance.author = self.request.user
 		return super().form_valid(form)
 
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+	model = Comment
+	success_url = '/home'
+
+	def test_func(self):
+		post = self.get_object()
+
+		return self.request.user == post.author
 
 class AddCategoryView(LoginRequiredMixin, CreateView):
 	model = Category

@@ -16,11 +16,10 @@ class Category(models.Model):
 
 class Post(models.Model):
 	title = models.CharField(max_length = 100)
-	# snippet = models.CharField(max_length= 200)
 	content = RichTextField(blank=True, null=True)
 	date_posted = models.DateTimeField(default = timezone.now)
 	author = models.ForeignKey(User, on_delete= models.CASCADE)
-	category = models.CharField(max_length=255, default='Coding')
+	category = models.CharField(max_length=255, default='Web Development')
 	done = models.BooleanField(default=False)
 	assign_to = models.ForeignKey(User, related_name='assign_to', blank=True, null=True, on_delete=models.CASCADE)
  
