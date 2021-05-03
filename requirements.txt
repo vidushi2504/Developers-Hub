@@ -1,0 +1,2 @@
+To enable message sending via email:
+Add email and password in settings.py file present in the finalproject folder. 
